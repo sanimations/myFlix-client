@@ -87,7 +87,7 @@ export const MainView = () => {
     ]);
 
     const [selectedMovie, setSelectedMovie] = useState(null);
-    console.log({ selectedMovie });
+
     if (selectedMovie) {
         return (
             <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
