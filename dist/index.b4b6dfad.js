@@ -27313,45 +27313,46 @@ var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
     const [movies, setMovies] = (0, _react.useState)([]);
+    const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
         fetch("https://queer-films-a4556bef0856.herokuapp.com/movies").then((response)=>response.json()).then((data)=>{
             console.log(data);
             console.log(data.movies);
-            const moviesFromApi = data.movies.map((movie)=>{
-                console.log("1" + data.movies);
+            //data.movies.map throws an error with map so I am trying data.map, but that still doens't work
+            const moviesFromApi = data.map((movie)=>{
+                console.log("1" + movie);
                 return {
                     id: movie.key,
                     title: movie.title,
                     description: movie.description,
-                    director: {
-                        name: movie.director.name,
-                        bio: movie.director.bio,
-                        birth: movie.director.birth
+                    Director: {
+                        Name: movie.Director.Name,
+                        Bio: movie.Director.Bio,
+                        Birth: movie.Director.Birth
                     },
-                    genre: {
-                        name: movie.genre.name,
-                        description: movie.genre.description
+                    Genre: {
+                        Name: movie.Genre.Name,
+                        Description: movie.Genre.Description
                     },
-                    image: `https://covers.openlibrary.org/b/id/${movie.cover_i}-L.jpg`
+                    imagepath: `https://covers.openlibrary.org/b/id/${movie.cover_i}-L.jpg`
                 };
             });
             setMovies(moviesFromApi);
         });
     }, []);
-    const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
         movie: selectedMovie,
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 40,
+        lineNumber: 41,
         columnNumber: 13
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "There is no list!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 45,
+        lineNumber: 46,
         columnNumber: 16
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27362,16 +27363,16 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 50,
+                lineNumber: 51,
                 columnNumber: 17
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 48,
+        lineNumber: 49,
         columnNumber: 9
     }, undefined);
 };
-_s(MainView, "llzgrUkvR/+OoCNfiqlA1H2LLFI=");
+_s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
