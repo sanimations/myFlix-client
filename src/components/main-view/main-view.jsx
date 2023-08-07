@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
@@ -9,25 +9,26 @@ export const MainView = () => {
         fetch("https://queer-films-a4556bef0856.herokuapp.com/movies")
             .then((response) => response.json())
             .then((data) => {
-                const moviesFromApi = data.docs.map((doc) => {
+                console.log(data);
+                console.log(data.movies);
+                const moviesFromApi = data.movies.map((movie) => {
+                    console.log('1' + data.movies);
                     return {
-                        id: doc.key,
-                        title: doc.title,
-                        description: doc.description,
+                        id: movie.key,
+                        title: movie.title,
+                        description: movie.description,
                         director: {
-                            name: doc.director.name,
-                            bio: doc.director.bio,
-                            birth: doc.director.birth,
+                            name: movie.director.name,
+                            bio: movie.director.bio,
+                            birth: movie.director.birth,
                         },
                         genre: {
-                            name: doc.genre.name,
-                            description: doc.genre.description,
+                            name: movie.genre.name,
+                            description: movie.genre.description,
                         },
-                        image: `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
-                        directorName: doc.director_name?.[0]
+                        image: `https://covers.openlibrary.org/b/id/${movie.cover_i}-L.jpg`
                     };
                 });
-
                 setMovies(moviesFromApi);
             });
     }, []);
