@@ -27316,25 +27316,21 @@ const MainView = ()=>{
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
         fetch("https://queer-films-a4556bef0856.herokuapp.com/movies").then((response)=>response.json()).then((data)=>{
-            console.log(data);
-            console.log(data.movies);
-            //data.movies.map throws an error with map so I am trying data.map, but that still doens't work
             const moviesFromApi = data.map((movie)=>{
-                console.log("1" + movie);
                 return {
-                    id: movie.key,
-                    title: movie.title,
-                    description: movie.description,
-                    Director: {
-                        Name: movie.Director.Name,
-                        Bio: movie.Director.Bio,
-                        Birth: movie.Director.Birth
+                    id: movie._id,
+                    title: movie.Title,
+                    description: movie.Description,
+                    director: {
+                        name: movie.Director.Name,
+                        bio: movie.Director.Bio,
+                        birth: movie.Director.Birth
                     },
-                    Genre: {
-                        Name: movie.Genre.Name,
-                        Description: movie.Genre.Description
+                    genre: {
+                        name: movie.Genre.Name,
+                        description: movie.Genre.Description
                     },
-                    imagepath: `https://covers.openlibrary.org/b/id/${movie.cover_i}-L.jpg`
+                    image: `https://queer-films-a4556bef0856.herokuapp.com/images/${movie.ImagePath}`
                 };
             });
             setMovies(moviesFromApi);
@@ -27345,14 +27341,14 @@ const MainView = ()=>{
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 41,
+        lineNumber: 37,
         columnNumber: 13
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "There is no list!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 46,
+        lineNumber: 42,
         columnNumber: 16
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27363,12 +27359,12 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 51,
+                lineNumber: 47,
                 columnNumber: 17
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 49,
+        lineNumber: 45,
         columnNumber: 9
     }, undefined);
 };
