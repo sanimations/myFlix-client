@@ -32,7 +32,7 @@ export const LoginView = ({ onLoggedIn }) => {
             .catch((e) => {
                 alert("Something went wrong");
             });
-
+    
         if (data.user) {
             localStorage.setItem("user", JSON.stringify(data.user));
             localStorage.setItem("token", data.token);
@@ -41,7 +41,7 @@ export const LoginView = ({ onLoggedIn }) => {
             alert("No such user");
         }
 
-
+    }
         return (
             <form onSubmit={handleSubmit}>
                 <label>
@@ -66,4 +66,4 @@ export const LoginView = ({ onLoggedIn }) => {
             </form>
         );
     };
-} //this ending bracket may be on line 35 instead
+//this ending bracket may be on line 35 instead

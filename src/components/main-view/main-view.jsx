@@ -12,21 +12,21 @@ export const MainView = () => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
     /*const [user, setUser] = useState(storedUser? storedUser : null);
-  const [token, setToken] = useState(storedToken? storedToken : null);*/ 
+  const [token, setToken] = useState(storedToken? storedToken : null);*/
 
     useEffect(() => {
         if (!token) {
-          return;
+            return;
         }
-    
+
         fetch("https://queer-films-a4556bef0856.herokuapp.com/movies", {
-          headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` }
         })
-          .then((response) => response.json())
-          .then((movies) => {
-            setMovies(movies);
-          });
-      }, [token]);
+            .then((response) => response.json())
+            .then((movies) => {
+                setMovies(movies);
+            });
+    }, [token]);
 
     useEffect(() => {
         fetch("https://queer-films-a4556bef0856.herokuapp.com/movies")
@@ -63,7 +63,7 @@ export const MainView = () => {
                         setUser(user);
                         setToken(token);
                     }} />
-                or
+                <p>or</p>
                 <SignupView />
             </>
         );
@@ -95,9 +95,9 @@ export const MainView = () => {
     return (
         <div>
             <button
-                onClick={() => { 
+                onClick={() => {
                     setUser(null);
-                    setToken(null); 
+                    setToken(null);
                     localStorage.clear();
                 }}
             >
