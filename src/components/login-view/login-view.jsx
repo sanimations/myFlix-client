@@ -8,38 +8,39 @@ export const LoginView = ({ onLoggedIn }) => {
         // this prevents the default behavior of the form which is to reload the entire page
         event.preventDefault();
 
-        const data = {
-            access: username,
-            secret: password
+        const payload = {
+            username: username,
+            password: password
         };
 
-        fetch("https://queer-films-a4556bef0856.herokuapp.com/login", {
+        console.log("Login data: ", payload);
+
+        //fetch("https://queer-films-a4556bef0856.herokuapp.com/login", 
+        fetch("http://localhost:8080/login", 
+        {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(payload)
         })
-            .then((response) => response.json())
+            .then((response) => {
+                return response.json()
+            })
             .then((data) => {
                 console.log("Login response: ", data);
                 if (data.user) {
+                    localStorage.setItem("user", JSON.stringify(data.user));
+                    localStorage.setItem("token", data.token);
                     onLoggedIn(data.user, data.token);
                 } else {
                     alert("No such user");
                 }
             })
             .catch((e) => {
+                console.error("Login error: ", e);
                 alert("Something went wrong");
             });
-    
-        if (data.user) {
-            localStorage.setItem("user", JSON.stringify(data.user));
-            localStorage.setItem("token", data.token);
-            onLoggedIn(data.user, data.token);
-        } else {
-            alert("No such user");
-        }
 
     }
         return (

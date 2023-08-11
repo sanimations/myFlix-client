@@ -16,8 +16,11 @@ export const SignupView = () => {
             Email: email,
             Birthday: birthday
           };
+
+          console.log("Signup data: ", data);
       
           fetch("https://queer-films-a4556bef0856.herokuapp.com/users", {
+          //fetch("http://localhost:8080/users", {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -28,6 +31,7 @@ export const SignupView = () => {
               alert("Signup successful");
               window.location.reload();
             } else {
+              console.error("Signup failed response: ", response);
               alert("Signup failed");
             }
           });

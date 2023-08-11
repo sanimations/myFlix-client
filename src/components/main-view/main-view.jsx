@@ -11,25 +11,28 @@ export const MainView = () => {
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
-    /*const [user, setUser] = useState(storedUser? storedUser : null);
-  const [token, setToken] = useState(storedToken? storedToken : null);*/
 
     useEffect(() => {
         if (!token) {
+            console.log("Token is not available");
             return;
         }
-
-        fetch("https://queer-films-a4556bef0856.herokuapp.com/movies", {
+        console.log("Fetching movies with token: ", token);
+        fetch("https://queer-films-a4556bef0856.herokuapp.com/movies",
+        //fetch("http://localhost:8080/movies",
+        {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then((response) => response.json())
             .then((movies) => {
+                console.log("Movies response: ", movies);
                 setMovies(movies);
             });
     }, [token]);
 
     useEffect(() => {
         fetch("https://queer-films-a4556bef0856.herokuapp.com/movies")
+        //fetch("http://localhost:8080/movies")
             .then((response) => response.json())
             .then((data) => {
                 const moviesFromApi = data.map((movie) => {
