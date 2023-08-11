@@ -40,7 +40,7 @@ export const MainView = () => {
                             name: movie.Genre.Name,
                             description: movie.Genre.Description,
                         },
-                        image: `https://queer-films-a4556bef0856.herokuapp.com/images/${movie.ImagePath}`
+                        image: `${movie.ImagePath}`
                     };
                 });
                 setMovies(moviesFromApi);
