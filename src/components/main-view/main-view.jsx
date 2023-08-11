@@ -24,17 +24,8 @@ export const MainView = () => {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then((response) => response.json())
-            .then((movies) => {
-                console.log("Movies response: ", movies);
-                setMovies(movies);
-            });
-    }, [token]);
-
-    useEffect(() => {
-        fetch("https://queer-films-a4556bef0856.herokuapp.com/movies")
-        //fetch("http://localhost:8080/movies")
-            .then((response) => response.json())
             .then((data) => {
+                console.log("Movies response: ", data);
                 const moviesFromApi = data.map((movie) => {
                     return {
                         id: movie._id,
@@ -54,8 +45,7 @@ export const MainView = () => {
                 });
                 setMovies(moviesFromApi);
             });
-    }, []);
-
+    }, [token]);
 
 
     if (!user) {
@@ -97,6 +87,17 @@ export const MainView = () => {
 
     return (
         <div>
+            {movies.map((movie) => (
+                <MovieCard
+                    key={movie.id}
+                    movie={movie}
+                    onMovieClick={(newSelectedMovie) => {
+                        setSelectedMovie(newSelectedMovie);
+                    }}
+                    
+                />
+               
+            ))}
             <button
                 onClick={() => {
                     setUser(null);
@@ -106,15 +107,6 @@ export const MainView = () => {
             >
                 Logout
             </button>
-            {movies.map((movie) => (
-                <MovieCard
-                    key={movie.id}
-                    movie={movie}
-                    onMovieClick={(newSelectedMovie) => {
-                        setSelectedMovie(newSelectedMovie);
-                    }}
-                />
-            ))}
         </div>
     );
 };
