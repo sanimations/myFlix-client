@@ -28467,8 +28467,8 @@ const LoginView = ({ onLoggedIn })=>{
             password: password
         };
         console.log("Login data: ", payload);
-        //fetch("https://queer-films-a4556bef0856.herokuapp.com/login", 
-        fetch("http://localhost:8080/login", {
+        fetch("https://queer-films-a4556bef0856.herokuapp.com/login", //fetch("http://localhost:8080/login", 
+        {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
