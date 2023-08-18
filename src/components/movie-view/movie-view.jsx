@@ -1,6 +1,19 @@
+import PropTypes from "prop-types";
+import { Card, Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import "./movie-view.scss";
 
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movies }) => {
+    const { movieTitle } = useParams();
+
+    console.log("this is movies: ", movies);
+    console.log("movieTitle: ", movieTitle);
+    
+    const movie = movies.find((m) => m.title === movieTitle);
+
+    console.log("This is movie: ", movie);
     return (
         <div>
             <div>
@@ -25,7 +38,9 @@ export const MovieView = ({ movie, onBackClick }) => {
                 <span>{movie.genre.name}</span>
                 <span>{movie.genre.description}</span>
             </div>
-            <button onClick={onBackClick} className = "back-button" style={{ corsor: "pointer" }}>Back</button>
+            <Link to={ `/`}>
+                <button className="back-button">Back</button>
+            </Link>            
         </div>
     );
 };
