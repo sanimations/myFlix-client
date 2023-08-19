@@ -101,20 +101,17 @@ export const MainView = () => {
                         }
                     />
                     <Route
-                        path="/movies/:movieTitle"
+                        path="/movie/:movieId"
                         element={
                             <>
                                 {!user ? (
                                     <Navigate to="/login" replace />
-                                ) : movies.length === 0 ? (
-                                    <Col>There is no list!</Col>
                                 ) : (
                                     <Col md={8}>
                                         <MovieView movies={movies} />
                                     </Col>
                                 )}
                             </>
-                        } //Maybe add things to line 104 and 122 like user={userObject} token={token} setuser={(user() =>{ setUserName(user.username); setUserObject(user);}}/>
                     />
                     <Route
                         path="/"

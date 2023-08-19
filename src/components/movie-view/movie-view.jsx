@@ -6,12 +6,12 @@ import { useState, useEffect } from "react";
 import "./movie-view.scss";
 
 export const MovieView = ({ movies }) => {
-    const { movieTitle } = useParams();
+    const { movieId } = useParams();
 
     console.log("this is movies: ", movies);
-    console.log("movieTitle: ", movieTitle);
+    console.log("movieId: ", movieId);
     
-    const movie = movies.find((m) => m.title === movieTitle);
+    const movie = movies.find((m) => m.id === movieId);
 
     console.log("This is movie: ", movie);
     return (
@@ -36,7 +36,7 @@ export const MovieView = ({ movies }) => {
             <div>
                 <span>Genre: </span>
                 <span>{movie.genre.name}</span>
-                <span>{movie.genre.description}</span>
+                <p>{movie.genre.description}</p>
             </div>
             <Link to={ `/`}>
                 <button className="back-button">Back</button>
