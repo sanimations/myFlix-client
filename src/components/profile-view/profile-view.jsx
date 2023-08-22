@@ -9,6 +9,31 @@ import { MovieCard } from "../movie-card/movie-card";
 export const ProfileView = ({ user, movies }) => {
   let favMovies = movies.filter((m) => user.FavoriteMovies.includes(m.id));
 
+//   updateUsername = () => {
+
+//     const userData = {
+//       username: username
+//     };
+//     fetch("https://queer-films-a4556bef0856.herokuapp.com/users/" + user.username, {
+//       method: "PUT",
+//       headers: {"Content-Type": "application/json", Authorization:  `Bearer ${token}`},
+//       body: JSON.stringify(userData)
+//  .then((response) => response.json())
+//   .then((newUsername) => {
+//     if(newUsername.username) {
+//       localStorage.setItem("user", JSON.stringify(newUsername.username));
+//       localStorage.setItem("userObject", JSON.stringify(newUsername.username));
+//       alert("Username Updated!  Hello, " + newUsername.username)
+//     }
+//     else {
+//       console.error("Error: " + error);
+//       alert("Could not update username")
+//     }
+//   })
+// })};
+
+
+
   return (
     <div>
       {user.Username}
