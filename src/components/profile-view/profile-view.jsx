@@ -8,7 +8,6 @@ import { MovieCard } from "../movie-card/movie-card";
 
 export const ProfileView = ({ user, movies, token }) => {
   const [userData, setUserData] = useState({});
-  console.log({user});
 
   let favMovies = movies.filter((m) => user.FavoriteMovies.includes(m.id));
 
