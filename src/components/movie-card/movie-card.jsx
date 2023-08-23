@@ -6,7 +6,7 @@ import "./movie-card.scss";
 
 
 export const MovieCard = ({ user, movie }) => {
-    console.log({user});
+
 
     return (
         <Card className="h-100">
@@ -17,9 +17,9 @@ export const MovieCard = ({ user, movie }) => {
                 <Link to={ `/movie/` + movie.id}>
                 <Button variant="link">Open</Button>
                 </Link>
-                {/* <Link to={ `/users/` + user.Username + `/movies/` + movie.id}>
+                <Link to={ `/users/` + user.Username + `/movies/` + movie.id}>
                 <Button variant="link">Add/Remove Favorite</Button>
-                </Link> */}
+                </Link>
             </Card.Body>
         </Card>
     );
