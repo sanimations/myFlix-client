@@ -120,7 +120,7 @@ export const MainView = () => {
                 {!user ? (
                   <Navigate to="/login" />
                 ) : (
-                  <Col md={5}>
+                  <Col className="mb-5" md={9}>
                     <ProfileView user={user} movies={movies} />
                   </Col>
                 )}
@@ -139,7 +139,7 @@ export const MainView = () => {
                   <>
                     {movies.map((movie) => (
                       <Col className="mb-5" key={movie.id} md={3}>
-                        <MovieCard user={user} movie={movie} />
+                        <MovieCard user={user} movie={movie} token={token} />
                       </Col>
                     ))}
                   </>
