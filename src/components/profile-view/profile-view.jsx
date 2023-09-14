@@ -11,34 +11,36 @@ export const ProfileView = ({ user, movies, token }) => {
 
   let favMovies = movies.filter((m) => user.FavoriteMovies.includes(m.id));
 
-  const handleSubmit = (e) => e.preventDefault();
-  fetch(
-    "https://queer-films-a4556bef0856.herokuapp.com/users/" + user.Username,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(userData),
-    })
-        .then((response) => response.json())
-        .then((updatedUser) => {
-          if (updatedUser.username) {
-            (user.username = updatedUser.username),
-              (user.email = updatedUser.email),
-              (user.password = updatedUser.password);
-            alert("User info Updated!");
-          } else {
-            console.error("Error: " + error);
-            alert("Error updated information");
-          }
-        })
-        .catch((error) => {
-          console.error("Error 2: " + error);
-        });
-
-    
+  let changeUsername = (user, token) => {
+    console.log(user.Username);
+    // const handleSubmit = (e) => e.preventDefault();
+    fetch(
+      "https://queer-films-a4556bef0856.herokuapp.com/users/" + user.Username,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(userData),
+      }
+    )
+      .then((response) => response.json())
+      .then((updatedUser) => {
+        if (updatedUser.username) {
+          (user.username = updatedUser.username),
+            (user.email = updatedUser.email),
+            (user.password = updatedUser.password);
+          alert("User info Updated!");
+        } else {
+          console.error("Error: " + error);
+          alert("Error updated information");
+        }
+      })
+      .catch((error) => {
+        console.error("Error 2: " + error);
+      });
+  };
 
   return (
     <div>
@@ -49,7 +51,7 @@ export const ProfileView = ({ user, movies, token }) => {
         <Row>
           {favMovies.map((movie) => {
             return (
-              <Col className="mb-5" key={movie.id} md={6}>
+              <Col className="mb-9" key={movie.id} md={4}>
                 <MovieCard movie={movie} user={user} />
               </Col>
             );
@@ -59,11 +61,11 @@ export const ProfileView = ({ user, movies, token }) => {
       <Form>
         <Form.Group className="mb-3" controlId="UpdateUsername">
           <Form.Label>New Username</Form.Label>
-          <Form.Control 
-            type="text"  
+          <Form.Control
+            type="text"
             value={userData.Username}
-            placeholder="ExampleUsername" 
-            />
+            placeholder="ExampleUsername"
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="UpdatePassword">
@@ -78,7 +80,12 @@ export const ProfileView = ({ user, movies, token }) => {
           <Form.Label>New Email</Form.Label>
           <Form.Control type="email" placeholder="Example@email.com" />
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={() => setUserData(user.Username=userData.Username)}>
+        <Button
+          variant="primary"
+          type="submit"
+          onClick={() => changeUsername(user, token)}
+          // onClick={() => setUserData((user.Username = userData.Username))}
+        >
           Submit
         </Button>
       </Form>
