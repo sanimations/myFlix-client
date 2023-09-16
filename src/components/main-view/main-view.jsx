@@ -17,13 +17,19 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(storedUser);
   const [token, setToken] = useState(storedToken);
+ 
+  useEffect(() => {
+    if (user && localStorage.getItem("user") !== null) {
+      setUser(JSON.parse(localStorage.getItem("user")));
+    }
+  }, [storedUser]);
 
   useEffect(() => {
     if (!token) {
       console.log("Token is not available");
       return;
     }
-    console.log("Fetching movies with token: ", token);
+    // console.log("Fetching movies with token: ", token);
     fetch(
       "https://queer-films-a4556bef0856.herokuapp.com/movies",
       //fetch("http://localhost:8080/movies",
@@ -33,7 +39,7 @@ export const MainView = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("Movies response: ", data);
+        // console.log("Movies response: ", data);
         const moviesFromApi = data.map((movie) => {
           return {
             id: movie._id,
@@ -54,6 +60,8 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, [token]);
+
+
 
   return (
     <BrowserRouter>
@@ -121,12 +129,12 @@ export const MainView = () => {
                   <Navigate to="/login" />
                 ) : (
                   <Col className="mb-5" md={9}>
-                    <ProfileView user={user} movies={movies} />
+                    <ProfileView user={user} movies={movies} token={token} />
                   </Col>
                 )}
               </>
             }
-          /> 
+          />
           <Route
             path="/"
             element={

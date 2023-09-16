@@ -22,7 +22,12 @@ export const MovieCard = ({ user, movie, token }) => {
           },
           body: JSON.stringify(movie),
         }
-      );
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          localStorage.setItem("user", JSON.stringify(data));
+        });
     } else {
       fetch(
         "https://queer-films-a4556bef0856.herokuapp.com/users/" +
@@ -37,10 +42,15 @@ export const MovieCard = ({ user, movie, token }) => {
           },
           body: JSON.stringify(movie),
         }
-      );
+      )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem("user", JSON.stringify(data));
+      });
     }
   };
-  //maybe function here for add/remove instead of link
+  
   return (
     <Card className="h-100">
       <Card.Img variant="top" src={movie.image} />
