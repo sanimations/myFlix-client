@@ -6,11 +6,8 @@ import { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card";
 
-export const ProfileView = ({ user, movies, token }) => {
+export const ProfileView = ({ user, movies, token, setUser }) => {
   const [userData, setUserData] = useState({});
-  // let userUsername = userData.Username;
-  // let userPass = userData.Password;
-  // let userEmail = userData.Email;
 
   let favMovies = movies.filter((m) => user.FavoriteMovies.includes(m.id));
 
@@ -31,7 +28,7 @@ export const ProfileView = ({ user, movies, token }) => {
       .then((response) => response.json())
       .then((updatedUser) => {
         if (updatedUser.Username) {
-            (user.Username = updatedUser.Username),
+          (user.Username = updatedUser.Username),
             localStorage.setItem("user", JSON.stringify(user.Username)),
             (user.Email = updatedUser.Email),
             (user.Password = updatedUser.Password);
@@ -46,6 +43,23 @@ export const ProfileView = ({ user, movies, token }) => {
       });
   };
 
+  let handleDeregister = () => {
+    fetch(
+      "https://queer-films-a4556bef0856.herokuapp.com/users/" + user.Username,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((deletedUser) => {
+        alert(deletedUser);
+        setUser(null);
+      });
+  };
+
   return (
     <div>
       <p>{user.Username}</p>
@@ -56,7 +70,12 @@ export const ProfileView = ({ user, movies, token }) => {
           {favMovies.map((movie) => {
             return (
               <Col className="mb-9" key={movie.id} md={4}>
-                <MovieCard movie={movie} user={user} token={token}/>
+                <MovieCard
+                  movie={movie}
+                  user={user}
+                  token={token}
+                  setUser={setUser}
+                />
               </Col>
             );
           })}
@@ -102,6 +121,16 @@ export const ProfileView = ({ user, movies, token }) => {
           Submit
         </Button>
       </Form>
+      <p>If you would like to delete your account, please click below</p>
+      <Button
+          variant="danger"
+          size = "lg"
+          onClick={handleDeregister}
+          // onClick={() => handleChange(user, token)}
+          // onClick={() => setUserData((user.Username = userData.Username))}
+        >
+          DELETE ACCOUNT
+        </Button>
     </div>
   );
 };
