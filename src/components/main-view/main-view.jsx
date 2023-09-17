@@ -17,12 +17,7 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(storedUser);
   const [token, setToken] = useState(storedToken);
- 
-  useEffect(() => {
-    if (user && localStorage.getItem("user") !== null) {
-      setUser(JSON.parse(localStorage.getItem("user")));
-    }
-  }, []);
+
 
   useEffect(() => {
     if (!token) {
@@ -60,8 +55,6 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, [token]);
-
-
 
   return (
     <BrowserRouter>
@@ -129,7 +122,7 @@ export const MainView = () => {
                   <Navigate to="/login" />
                 ) : (
                   <Col className="mb-5" md={9}>
-                    <ProfileView user={user} movies={movies} token={token} />
+                    <ProfileView user={user} movies={movies} token={token} setUser={setUser}/>
                   </Col>
                 )}
               </>
@@ -147,7 +140,7 @@ export const MainView = () => {
                   <>
                     {movies.map((movie) => (
                       <Col className="mb-5" key={movie.id} md={3}>
-                        <MovieCard user={user} movie={movie} token={token} />
+                        <MovieCard user={user} movie={movie} token={token} setUser={setUser} />
                       </Col>
                     ))}
                   </>

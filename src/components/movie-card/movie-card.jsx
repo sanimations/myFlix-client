@@ -4,7 +4,7 @@ import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./movie-card.scss";
 
-export const MovieCard = ({ user, movie, token }) => {
+export const MovieCard = ({ user, movie, token, setUser }) => {
   let toggleFav = (user, movie, token) => {
     let match = user.FavoriteMovies.filter((m) => m == movie.id);
 
@@ -27,6 +27,7 @@ export const MovieCard = ({ user, movie, token }) => {
         .then((data) => {
           console.log(data);
           localStorage.setItem("user", JSON.stringify(data));
+          setUser(JSON.parse(localStorage.getItem("user")));
         });
     } else {
       fetch(
@@ -47,6 +48,7 @@ export const MovieCard = ({ user, movie, token }) => {
       .then((data) => {
         console.log(data);
         localStorage.setItem("user", JSON.stringify(data));
+        setUser(JSON.parse(localStorage.getItem("user")));
       });
     }
   };
@@ -58,9 +60,10 @@ export const MovieCard = ({ user, movie, token }) => {
         <Card.Title>{movie.title}</Card.Title>
         <Card.Text>{movie.director.name}</Card.Text>
         <Link to={`/movie/` + movie.id}>
-          <Button variant="link">Open</Button>
+          <Button variant="primary">Open</Button>
         </Link>
-        <Button onClick={() => toggleFav(user, movie, token)}>
+        <span> </span>
+        <Button variant = "dark" onClick={() => toggleFav(user, movie, token)}>
           Add/Remove Favorite
         </Button>
       </Card.Body>
