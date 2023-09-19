@@ -12,7 +12,7 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
   let favMovies = movies.filter((m) => user.FavoriteMovies.includes(m.id));
 
   let handleSubmit = (event) => {
-    console.log(user.Username);
+    console.log({userData});
     event.preventDefault();
     fetch(
       "https://queer-films-a4556bef0856.herokuapp.com/users/" + user.Username,
@@ -28,10 +28,12 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
       .then((response) => response.json())
       .then((updatedUser) => {
         if (updatedUser.Username) {
-          (user.Username = updatedUser.Username),
-            localStorage.setItem("user", JSON.stringify(user.Username)),
-            (user.Email = updatedUser.Email),
-            (user.Password = updatedUser.Password);
+            localStorage.setItem("user", JSON.stringify(updatedUser.Username)),
+            setUser(JSON.parse(localStorage.getItem("user"))),
+            // (user.Email = updatedUser.Email),
+            // localStorage.setItem("user", JSON.stringify(user.Email)),
+            // (user.Password = updatedUser.Password),
+            // localStorage.setItem("user", JSON.stringify(user.Password)),
           alert("User info Updated!");
         } else {
           console.error("Error: " + error);
@@ -49,13 +51,14 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
       {
         method: "DELETE",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       }
     )
-      .then((response) => response.json())
-      .then((deletedUser) => {
-        alert(deletedUser);
+      .then((response) => {
+        localStorage.clear();
+        alert("Bye!");
         setUser(null);
       });
   };
@@ -88,7 +91,6 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
             type="text"
             value={userData.Username}
             onChange={(e) => setUserData(e.target.value)}
-            // placeholder="ExampleUsername"
           />
         </Form.Group>
 
