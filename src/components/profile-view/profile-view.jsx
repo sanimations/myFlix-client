@@ -7,13 +7,25 @@ import { Row, Col } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card";
 
 export const ProfileView = ({ user, movies, token, setUser }) => {
-  const [userData, setUserData] = useState({});
+  const [username, setUsername] = useState(user.Username);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(user.Email);
 
   let favMovies = movies.filter((m) => user.FavoriteMovies.includes(m.id));
 
   let handleSubmit = (event) => {
-    console.log({userData});
+    console.log({username});
+    console.log({password});
+    console.log({email});
+
     event.preventDefault();
+
+    let userData = {
+      Username: username,
+      Password: password,
+      Email: email
+    };
+
     fetch(
       "https://queer-films-a4556bef0856.herokuapp.com/users/" + user.Username,
       {
@@ -28,12 +40,8 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
       .then((response) => response.json())
       .then((updatedUser) => {
         if (updatedUser.Username) {
-            localStorage.setItem("user", JSON.stringify(updatedUser.Username)),
+            localStorage.setItem("user", JSON.stringify(updatedUser)),
             setUser(JSON.parse(localStorage.getItem("user"))),
-            // (user.Email = updatedUser.Email),
-            // localStorage.setItem("user", JSON.stringify(user.Email)),
-            // (user.Password = updatedUser.Password),
-            // localStorage.setItem("user", JSON.stringify(user.Password)),
           alert("User info Updated!");
         } else {
           console.error("Error: " + error);
@@ -89,8 +97,8 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
           <Form.Label>New Username</Form.Label>
           <Form.Control
             type="text"
-            value={userData.Username}
-            onChange={(e) => setUserData(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </Form.Group>
 
@@ -98,8 +106,8 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
           <Form.Label>New Password</Form.Label>
           <Form.Control
             type="password"
-            value={userData.Password}
-            onChange={(e) => setUserData(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Form.Text className="text-muted">
             Longer passwords are more secure
@@ -110,15 +118,13 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
           <Form.Label>New Email</Form.Label>
           <Form.Control
             type="email"
-            value={userData.Email}
-            onChange={(e) => setUserData(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
         <Button
           variant="primary"
           type="submit"
-          // onClick={() => handleChange(user, token)}
-          // onClick={() => setUserData((user.Username = userData.Username))}
         >
           Submit
         </Button>
