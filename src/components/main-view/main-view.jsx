@@ -65,21 +65,7 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-      <NavigationBar
-        user={user}
-        onLoggedOut={handleLogout}
-      />
-      {user && (
-      <div className="input-group">
-        <input
-          type="text"
-          className="searchBar"
-          placeholder="Search movies..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
-      )}
+      <NavigationBar user={user} onLoggedOut={handleLogout} />
       <Row>
         <Routes>
           <Route
@@ -152,6 +138,15 @@ export const MainView = () => {
             path="/"
             element={
               <>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="searchBar"
+                    placeholder="Search movies..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
