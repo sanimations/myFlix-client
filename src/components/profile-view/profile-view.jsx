@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card";
+import "./profile-view.scss";
 
 export const ProfileView = ({ user, movies, token, setUser }) => {
   const [username, setUsername] = useState(user.Username);
@@ -14,16 +15,16 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
   let favMovies = movies.filter((m) => user.FavoriteMovies.includes(m.id));
 
   let handleSubmit = (event) => {
-    console.log({username});
-    console.log({password});
-    console.log({email});
+    console.log({ username });
+    console.log({ password });
+    console.log({ email });
 
     event.preventDefault();
 
     let userData = {
       Username: username,
       Password: password,
-      Email: email
+      Email: email,
     };
 
     fetch(
@@ -40,9 +41,9 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
       .then((response) => response.json())
       .then((updatedUser) => {
         if (updatedUser.Username) {
-            localStorage.setItem("user", JSON.stringify(updatedUser)),
+          localStorage.setItem("user", JSON.stringify(updatedUser)),
             setUser(JSON.parse(localStorage.getItem("user"))),
-          alert("User info Updated!");
+            alert("User info Updated!");
         } else {
           console.error("Error: " + error);
           alert("Error updated information");
@@ -63,19 +64,27 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
           Authorization: `Bearer ${token}`,
         },
       }
-    )
-      .then((response) => {
-        localStorage.clear();
-        alert("Bye!");
-        setUser(null);
-      });
+    ).then((response) => {
+      localStorage.clear();
+      alert("Bye!");
+      setUser(null);
+    });
   };
 
   return (
     <div>
-      <p>{user.Username}</p>
-      <p>{new Date(user.Birthday).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'})}</p>
-      <p>{user.Email}</p>
+      <div className="profile-details">
+        <p>{user.Username}</p>
+        <p>
+          {new Date(user.Birthday).toLocaleDateString(undefined, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            timeZone: "UTC",
+          })}
+        </p>
+        <p>{user.Email}</p>
+      </div>
       <div>
         <Row>
           {favMovies.map((movie) => {
@@ -92,7 +101,7 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
           })}
         </Row>
       </div>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} className="form-info">
         <Form.Group className="mb-3" controlId="UpdateUsername">
           <Form.Label>Enter New Username</Form.Label>
           <Form.Control
@@ -124,23 +133,23 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-        >
+        <Button variant="primary" type="submit">
           Submit
         </Button>
       </Form>
-      <p>If you would like to delete your account, please click below</p>
-      <Button
+      <div>
+        <p className="deregister-text">
+          If you would like to delete your account, please click below
+        </p>
+        <Button
           variant="danger"
-          size = "lg"
+          size="lg"
           onClick={handleDeregister}
-          // onClick={() => handleChange(user, token)}
-          // onClick={() => setUserData((user.Username = userData.Username))}
+          className="deregister-button"
         >
           DELETE ACCOUNT
         </Button>
+      </div>
     </div>
   );
 };
