@@ -17,7 +17,7 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(storedUser);
   const [token, setToken] = useState(storedToken);
-
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (!token) {
@@ -56,15 +56,30 @@ export const MainView = () => {
       });
   }, [token]);
 
+  const handleLogout = () => {
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+  };
+
   return (
     <BrowserRouter>
       <NavigationBar
         user={user}
-        onLoggedOut={() => {
-          setUser(null);
-          setToken(null);
-        }}
+        onLoggedOut={handleLogout}
       />
+      {user && (
+      <div className="input-group">
+        <input
+          type="text"
+          className="searchBar"
+          placeholder="Search movies..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      )}
       <Row>
         <Routes>
           <Route
@@ -122,7 +137,12 @@ export const MainView = () => {
                   <Navigate to="/login" />
                 ) : (
                   <Col className="mb-5" md={9}>
-                    <ProfileView user={user} movies={movies} token={token} setUser={setUser}/>
+                    <ProfileView
+                      user={user}
+                      movies={movies}
+                      token={token}
+                      setUser={setUser}
+                    />
                   </Col>
                 )}
               </>
@@ -138,11 +158,22 @@ export const MainView = () => {
                   <Col>There is no list!</Col>
                 ) : (
                   <>
-                    {movies.map((movie) => (
-                      <Col className="mb-5" key={movie.id} md={3}>
-                        <MovieCard user={user} movie={movie} token={token} setUser={setUser} />
-                      </Col>
-                    ))}
+                    {movies
+                      .filter((movie) =>
+                        movie.title
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase())
+                      )
+                      .map((movie) => (
+                        <Col className="mb-5" key={movie.id} md={3}>
+                          <MovieCard
+                            user={user}
+                            movie={movie}
+                            token={token}
+                            setUser={setUser}
+                          />
+                        </Col>
+                      ))}
                   </>
                 )}
               </>
