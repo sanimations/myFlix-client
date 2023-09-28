@@ -74,7 +74,7 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
   return (
     <div>
       <p>{user.Username}</p>
-      <p>{user.Birthday}</p>
+      <p>{new Date(user.Birthday).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'})}</p>
       <p>{user.Email}</p>
       <div>
         <Row>
@@ -94,7 +94,7 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
       </div>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="UpdateUsername">
-          <Form.Label>New Username</Form.Label>
+          <Form.Label>Enter New Username</Form.Label>
           <Form.Control
             type="text"
             value={username}
@@ -103,9 +103,10 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="UpdatePassword">
-          <Form.Label>New Password</Form.Label>
+          <Form.Label>Enter Password</Form.Label>
           <Form.Control
             type="password"
+            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -115,9 +116,10 @@ export const ProfileView = ({ user, movies, token, setUser }) => {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="UpdateEmail">
-          <Form.Label>New Email</Form.Label>
+          <Form.Label>Enter Email</Form.Label>
           <Form.Control
             type="email"
+            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
