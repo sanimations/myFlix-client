@@ -65,7 +65,11 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-      <NavigationBar user={user} onLoggedOut={handleLogout} />
+      <NavigationBar
+        user={user}
+        onLoggedOut={handleLogout}
+        className="navbar"
+      />
       <Row>
         <Routes>
           <Route
@@ -75,7 +79,7 @@ export const MainView = () => {
                 {user ? (
                   <Navigate to="/" />
                 ) : (
-                  <Col md={5}>
+                  <Col md={12}>
                     <SignupView />
                   </Col>
                 )}
@@ -89,7 +93,7 @@ export const MainView = () => {
                 {user ? (
                   <Navigate to="/" />
                 ) : (
-                  <Col md={5}>
+                  <Col md={12}>
                     <LoginView
                       onLoggedIn={(user, token) => {
                         setUser(user);
@@ -108,7 +112,7 @@ export const MainView = () => {
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : (
-                  <Col md={8}>
+                  <Col md={12}>
                     <MovieView movies={movies} />
                   </Col>
                 )}
