@@ -25,7 +25,7 @@ To run this project locally, follow these steps:
     npm install
 
 4. Start the application using Parcel:
-    parcel src/index.html
+    parcel src/index.html or npx parcel src/index.html
 
 5. Search in your web browser:
     Open your web browser and go to 
